@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'docker',url: 'https://github.com/duygugurbuzyildiz/python-package-flask-test'
+                git branch: 'docker',url: 'https://github.com/duygugurbuzyildiz/myinsuranceapp-v1.git'
 	        }
         }        
         stage('Requirements') {
@@ -16,28 +16,28 @@ pipeline {
             }
         }
         stage('Unit/Integration tests') {
-            steps {
+           steps {
                 echo 'Unit/Integration...'
                 sh 'python3 -m unittest discover -s tests/unit -v'
             }
-        }        
-        stage('Acceptance tests') {
+        }       
+       stage('Acceptance tests') {
             steps {
                 echo 'Acceptance...'
-                sh 'python3 -m unittest discover -s tests/acceptance -v'
+                sh 'python3 -m unittest discover -s tests/acceptance-flask/ -v'
             }
-        }     
+        }
         stage('Create image') {
             steps {
                 echo 'creating image...'
-                sh 'docker build -t duygugurbuzyildiz/python-package-flask-test:latest -f Dockerfile .'
+                sh 'docker build -t duygugurbuzyildiz/myinsuranceapp:latest -f Dockerfile .'
             }
         } 
         stage('Publish image') {
             steps {
                 echo 'pushing image...'
                 withDockerRegistry([ credentialsId: "docker-hub-credentials", url: "" ]) {
-                    sh 'docker push duygugurbuzyildiz/python-package-flask-test:latest'
+                    sh 'docker push duygugurbuzyildiz/myinsuranceapp:latest'
                 }
             }
         } 
