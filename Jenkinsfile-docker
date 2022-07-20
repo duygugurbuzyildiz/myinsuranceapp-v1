@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Installing dependencies...'
                 sh 'pip3 install -r requirements.txt'
-                sh 'python3 ./project/init/init_db.py'
+                sh 'py project/init/init_db.py'
             }
         }
         stage('Unit/Integration tests') {
