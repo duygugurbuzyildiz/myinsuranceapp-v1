@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myinsuranceapp-v1-deployment-az
+  labels:
+    app: myinsuranceapp-v1-az
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myinsuranceapp-v1-az
+  template:
+    metadata:
+      labels:
+        app: myinsuranceapp-v1-az
+    spec:
+      imagePullSecrets:
+      - name: acr-secret
+      containers:
+      - name: myinsuranceapp-v1-az
+        image: duygubootcampregistry.azurecr.io/myinsurance-v1:v1.2
+        ports:
+        - name: http
+          containerPort: 5000
